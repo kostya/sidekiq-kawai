@@ -13,8 +13,8 @@ And add to config/application.rb
 
     config.autoload_paths += %W( #{config.root}/app/models/resque )
     
-Creates Consumer
-----------------
+Consumer
+--------
 app/models/resque/rq_bla.rb
 
 ``` ruby
