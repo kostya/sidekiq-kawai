@@ -2,6 +2,7 @@ Resque Kawai
 ============
 
 Syntax sugar for Resque consumers. Each consumer is a class, with clean interface, and custom logger.
+Usefull when count of different events ~100 and more.
 
 ``` ruby
 gem 'resque-kawai'

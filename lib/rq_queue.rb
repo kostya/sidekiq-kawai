@@ -1,5 +1,6 @@
 # -*- encoding : utf-8 -*-
-require 'active_support/inflector'
+require 'active_support'
+require 'active_support/inflector' unless ''.respond_to?(:underscore)
 require 'resque'
 require 'logger'
 
@@ -42,7 +43,7 @@ class RqQueue
     logger.info "done #{method_name}, #{"%.6f" % (Time.now - start_time)} s" if benchmark
    
   rescue => ex
-    logger.error "Failed event: #{ex.message}"
+    logger.error "Failed event: #{ex.message} #{ex.backtrace}"
     raise ex
   end
 
