@@ -8,8 +8,8 @@ Gem::Specification.new do |s|
   s.authors = ["Makarchev Konstantin"]
   s.autorequire = %q{resque-kawai.rb}
   
-  s.description = %q{Syntax sugar for Resque consumers. Each consumer is a class, with clean interface, and custom logger.}
-  s.summary = %q{Syntax sugar for Resque consumers. Each consumer is a class, with clean interface, and custom logger.}
+  s.description = %q{Syntax sugar for Resque consumers. Each consumer is a class, with clean interface, and custom logger. Usefull when count of different events ~100 and more.}
+  s.summary = %q{Syntax sugar for Resque consumers. Each consumer is a class, with clean interface, and custom logger. Usefull when count of different events ~100 and more.}
 
   s.email = %q{kostya27@gmail.com}
   s.homepage = %q{http://github.com/kostya/resque-kawai}
