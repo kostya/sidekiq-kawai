@@ -2,6 +2,11 @@ require File.dirname(__FILE__) + '/spec_helper'
 require File.dirname(__FILE__) + '/test_class'
 
 describe RqQueue do
+
+  it "queue" do
+    RqTest.instance_variable_get('@queue').should == :test
+  end
+
   it "should enqueue defined event" do
     Resque.should_receive(:enqueue).with(RqTest, 'bla', [1, 'a', []])
     RqTest.bla(1, 'a', [])
