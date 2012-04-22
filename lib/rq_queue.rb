@@ -29,6 +29,7 @@ class RqQueue
     @logger ||= Logger.new(logger_path).tap do |logger|
       logger.formatter = lambda { |s, d, p, m| "#{d.strftime("%d.%m.%Y %H:%M:%S")} #{m}\n" }
       Rails.logger = logger if defined?(Rails)
+      ActiveRecord::Base.logger = logger if defined?(ActiveRecord)
     end
   end
   
