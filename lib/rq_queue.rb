@@ -43,18 +43,8 @@ class RqQueue
     logger.info "done #{method_name}, #{"%.6f" % (Time.now - start_time)} s" if benchmark
    
   rescue => ex
-    logger.error error_message(ex, method_name, args)
+    logger.error "!Failed event: #{method_name} => #{ex.message}"
     raise ex
-  end
-
-  def self.error_message(ex, method_name='', args=[])
-    <<-Q
-=======================================================================
- Failed event: #{method_name} #{args.inspect}
-   #{ex.message} 
-#{ex.backtrace[0..5].join("\n")}"
-=======================================================================
-    Q
   end
 
   # proxing method for tests  
