@@ -72,7 +72,7 @@ describe RqQueue do
   
   it "should proxy consumer" do
     RqTest.proxy(:ptest)
-    RqTest.ptest(111)
+    RqTest.ptest(111).should == 10
     $a.should == 111
   end
   

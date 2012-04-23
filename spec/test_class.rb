@@ -10,6 +10,7 @@ class RqTest < RqQueue
   
   def ptest(a)
     $a = a
+    10
   end
 
 end
