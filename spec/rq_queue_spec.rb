@@ -6,6 +6,10 @@ describe RqQueue do
   it "queue" do
     RqTest.instance_variable_get('@queue').should == :test
   end
+  
+  it "queue name A::B::C" do
+    A::B::C.instance_variable_get('@queue').should == :'a-b-c'
+  end
 
   it "should enqueue defined event" do
     Resque.should_receive(:enqueue).with(RqTest, 'bla', [1, 'a', []])
@@ -72,8 +76,9 @@ describe RqQueue do
   
   it "should proxy consumer" do
     RqTest.proxy(:ptest)
-    RqTest.ptest(111).should == 10
+    RqTest.ptest(111, 'abc').should == 10
     $a.should == 111
+    $b.should == 'abc'
   end
   
 end

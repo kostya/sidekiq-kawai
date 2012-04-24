@@ -14,7 +14,7 @@ class RqQueue
   end
   
   def self.extract_queue_name
-    name.gsub(/Rq/, '').underscore.to_sym
+    name.gsub(/^Rq/, '').underscore.gsub('/', '-').to_sym
   end
   
   def self.add_event(method_name, *args)
@@ -52,7 +52,8 @@ class RqQueue
   # proxing method for tests  
   def self.proxy(method_name)
     self.should_receive(method_name) do |*data|
-      self.instance.send(method_name, *data)
+      x = ::Resque.decode(::Resque.encode(data))
+      self.instance.send(method_name, *x)
     end.any_number_of_times
   end
   
