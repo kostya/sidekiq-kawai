@@ -3,3 +3,4 @@ TODO
 locks
 *.gem
 *.log
+.bundle

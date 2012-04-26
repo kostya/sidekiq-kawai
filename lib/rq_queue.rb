@@ -16,7 +16,11 @@ class RqQueue
   def self.extract_queue_name
     name.gsub(/^Rq/, '').underscore.gsub('/', '-').to_sym
   end
-  
+
+  def self.queue_name
+    @queue
+  end
+
   def self.add_event(method_name, *args)
     Resque.enqueue(self, method_name.to_s, args)
   end
@@ -73,6 +77,10 @@ class RqQueue
   
   def initialize
     self.logger = self.class.logger
+  end
+
+  def queue_name
+    self.class.queue_name
   end
   
 end

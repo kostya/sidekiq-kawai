@@ -10,6 +10,11 @@ describe RqQueue do
   it "queue name A::B::C" do
     A::B::C.instance_variable_get('@queue').should == :'a-b-c'
   end
+  
+  it "aliases for queues" do
+    RqTest.queue_name.should == :test
+    RqTest.instance.queue_name.should == :test
+  end
 
   it "should enqueue defined event" do
     Resque.should_receive(:enqueue).with(RqTest, 'bla', [1, 'a', []])
