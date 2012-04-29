@@ -46,7 +46,6 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  activesupport
   rake
   resque-kawai!
   rspec
