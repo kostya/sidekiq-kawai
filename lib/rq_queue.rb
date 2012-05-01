@@ -10,11 +10,15 @@ class RqQueue
   attr_accessor :logger
   
   def self.inherited(subclass)
-    subclass.instance_variable_set('@queue', subclass.extract_queue_name)
+    subclass.set_queue_name(subclass.extract_queue_name)
   end
   
   def self.extract_queue_name
     name.gsub(/^Rq/, '').underscore.gsub('/', '-').to_sym
+  end
+  
+  def self.set_queue_name(queue_name)
+    self.instance_variable_set('@queue', queue_name.to_sym)
   end
 
   def self.queue_name

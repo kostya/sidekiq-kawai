@@ -15,6 +15,24 @@ describe RqQueue do
     RqTest.queue_name.should == :test
     RqTest.instance.queue_name.should == :test
   end
+  
+  it "set queue_name" do
+    RqTest.set_queue_name('haha')
+    RqTest.queue_name.should == :haha
+    RqTest.instance.queue_name.should == :haha
+    
+    class Rq2 < RqTest
+      set_queue_name 'jopa'
+    end
+  end
+  
+  it "set queue name inside class" do
+    class Rq2 < RqTest
+      set_queue_name 'jopa'
+    end   
+    
+    Rq2.queue_name.should == :jopa               
+  end
 
   it "should enqueue defined event" do
     Resque.should_receive(:enqueue).with(RqTest, 'bla', [1, 'a', []])
