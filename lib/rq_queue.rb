@@ -14,7 +14,7 @@ class RqQueue
   end
   
   def self.extract_queue_name
-    name.gsub(/^Rq/, '').underscore.gsub('/', '-').to_sym
+    name.gsub(/^Rq/, '').underscore.gsub('/', '-').to_sym rescue :default
   end
   
   def self.set_queue_name(queue_name)
