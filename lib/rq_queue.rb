@@ -24,6 +24,8 @@ class RqQueue
   def self.queue_name
     @queue
   end
+  
+  
 
   def self.add_event(method_name, *args)
     Resque.enqueue(self, method_name.to_s, args)
@@ -32,6 +34,12 @@ class RqQueue
   def self.enqueue(method_name, *args)
     add_event method_name, *args
   end
+  
+  def self.method_missing(method, *args)
+    add_event(method, *args)
+  end
+
+
   
   # For resque-scheduler
   def self.add_event_in(times, method_name, *args)
@@ -42,10 +50,8 @@ class RqQueue
   def self.enqueue_in(times, method_name, *args)
     add_event_in(times, method_name, *args)
   end
+
   
-  def self.method_missing(method, *args)
-    add_event(method, *args)
-  end
   
   def self.logger
     @logger ||= Logger.new(logger_path).tap do |logger|
