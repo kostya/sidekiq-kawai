@@ -68,3 +68,14 @@ Usefull in specs
 ```
 
 When code call RqBla.some_method1(a,b,c) this would be convert into RqBla.new.some_method1(a,b,c)
+
+
+### Insert event with Resque-scheduler
+
+``` ruby
+  RqBla.add_event_in(10.seconds, :some_method1, 1, 2, 3)
+  
+  or 
+  
+  RqBla.enqueue_in(10.seconds, :some_method1, 1, 2, 3)
+```

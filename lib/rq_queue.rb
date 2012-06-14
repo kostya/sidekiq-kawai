@@ -29,6 +29,20 @@ class RqQueue
     Resque.enqueue(self, method_name.to_s, args)
   end
   
+  def self.enqueue(method_name, *args)
+    add_event method_name, *args
+  end
+  
+  # For resque-scheduler
+  def self.add_event_in(times, method_name, *args)
+    Resque.enqueue_in(times, self, method_name.to_s, args)
+  end          
+
+  # For resque-scheduler
+  def self.enqueue_in(times, method_name, *args)
+    add_event_in(times, method_name, *args)
+  end
+  
   def self.method_missing(method, *args)
     add_event(method, *args)
   end

@@ -62,7 +62,22 @@ describe RqQueue do
   it "should insert event with custom method" do
     Resque.should_receive(:enqueue).with(RqTest, 'super', [[1, 2, 3]])
     RqTest.add_event(:super, [1, 2, 3])
-  end              
+  end
+  
+  it "should insert event with custom method enqueue" do
+    Resque.should_receive(:enqueue).with(RqTest, 'super', [1, 2, 3])
+    RqTest.enqueue(:super, 1, 2, 3)
+  end
+  
+  it "enqueue in" do
+    Resque.should_receive(:enqueue_in).with(10, RqTest, 'super', [1, 2, 3])
+    RqTest.enqueue_in(10, :super, 1, 2, 3)
+  end
+  
+  it "add event in" do
+    Resque.should_receive(:enqueue_in).with(10, RqTest, 'super', [1, 2, 3])
+    RqTest.add_event_in(10, :super, 1, 2, 3)
+  end         
   
   describe "consume" do
     before :each do
