@@ -73,7 +73,8 @@ class RqQueue
     logger.info "done #{method_name}, #{"%.6f" % (Time.now - start_time)} s" if benchmark
    
   rescue => ex
-    logger.error "!Failed event: #{method_name} => #{ex.message}"
+    logger.error "!Failed event: #{method_name} => #{ex.message}"    
+    notify_about_error(ex)
     raise ex
   end
 
@@ -105,6 +106,10 @@ class RqQueue
 
   def queue_name
     self.class.queue_name
+  end
+  
+  def self.notify_about_error(exception)
+    # stub
   end
   
 end
