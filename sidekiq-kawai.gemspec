@@ -3,10 +3,9 @@ require File.dirname(__FILE__) + "/lib/version"
 
 Gem::Specification.new do |s|
   s.name = %q{sidekiq-kawai}
-  s.version = Rq::VERSION
+  s.version = Sk::VERSION
 
-  s.authors = ["Damir Sharipov"]
-  s.autorequire = %q{sidekiq-kawai.rb}
+  s.authors = ["Makarchev Konstantin", "Damir Sharipov"]
 
   s.description = %q{Syntax sugar for Sidekiq workers. Each consumer is a class, with clean interface, and custom logger. Usefull when count of different events ~100 and more.}
   s.summary = %q{Syntax sugar for Sidekiq consumers. Each consumer is a class, with clean interface, and custom logger. Usefull when count of different events ~100 and more.}
@@ -19,7 +18,7 @@ Gem::Specification.new do |s|
   s.require_paths = ["lib"]
 
   s.add_dependency 'activesupport'
-  s.add_dependency 'sidekiq'
+  s.add_dependency 'sidekiq', '>= 2.1.0'
   s.add_development_dependency "rspec"
   s.add_development_dependency "rake"
 

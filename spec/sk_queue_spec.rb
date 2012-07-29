@@ -23,56 +23,66 @@ describe SkQueue do
   end
 
   it "set queue name inside class" do
-    class Rq2 < SkTest
+    class Sk2 < SkTest
       set_queue_name :jopa
     end
 
-    Rq2.queue_name.should == :jopa
+    Sk2.queue_name.should == :jopa
   end
 
   it "should enqueue defined event" do
-    SkTest.should_receive(:client_push).with('class' => SkTest, 'args' => [:bla, 1, 'a', []])
+    SkTest.should_receive(:client_push).with('class' => SkTest, 'args' => [:bla, [1, 'a', []]])
     SkTest.bla(1, 'a', [])
   end
 
   it "insert empty event" do
-    SkTest.should_receive(:client_push).with('class' => SkTest, 'args' => [:bla])
+    SkTest.should_receive(:client_push).with('class' => SkTest, 'args' => [:bla, []])
     SkTest.bla
   end
 
  it "should enqueue undefined event" do
-   SkTest.should_receive(:client_push).with('class' => SkTest, 'args' => [:bl, 1])
+   SkTest.should_receive(:client_push).with('class' => SkTest, 'args' => [:bl, [1]])
    SkTest.bl(1)
  end
 
   it "should enqueue undefined event" do
-    SkTest.should_receive(:client_push).with('class' => SkTest, 'args' => [:bl2, {}])
+    SkTest.should_receive(:client_push).with('class' => SkTest, 'args' => [:bl2, [{}]])
     SkTest.bl2({})
   end
 
   it "should insert event with custom method" do
-    SkTest.should_receive(:client_push).with('class' => SkTest, 'args' => [:super, 1,2,3])
+    SkTest.should_receive(:client_push).with('class' => SkTest, 'args' => [:super, [1,2,3]])
     SkTest.add_event(:super, 1, 2, 3)
   end
 
   it "should insert event with custom method" do
-    SkTest.should_receive(:client_push).with('class' => SkTest, 'args' => [:super, [1,2,3]])
+    SkTest.should_receive(:client_push).with('class' => SkTest, 'args' => [:super, [[1,2,3]]])
     SkTest.add_event(:super, [1, 2, 3])
   end
 
   it "should insert event with custom method enqueue" do
-    SkTest.should_receive(:client_push).with('class' => SkTest, 'args' => [:super, 1,2,3])
+    SkTest.should_receive(:client_push).with('class' => SkTest, 'args' => [:super, [1,2,3]])
     SkTest.enqueue(:super, 1, 2, 3)
   end
 
   it "enqueue in" do
-    SkTest.should_receive(:perform_in).with(10, :super, 1, 2, 3)
+    SkTest.should_receive(:perform_in).with(10, :super, [1, 2, 3])
     SkTest.enqueue_in(10, :super, 1, 2, 3)
   end
 
   it "add event in" do
-    SkTest.should_receive(:perform_in).with(10, :super, 1, 2, 3)
+    SkTest.should_receive(:perform_in).with(10, :super, [1, 2, 3])
     SkTest.add_event_in(10, :super, 1, 2, 3)
+  end
+  
+  it "abstract enqueue in" do
+    SkTest.should_receive(:perform_in).with(10, :bla, [1, 2, 3])
+    SkTest.bla_in(10.seconds, 1, 2, 3)    
+  end
+  
+  it "abstract enqueue at" do
+    SkTest.should_receive(:perform_at).with(10, :bla, [1, 2, 3])
+    SkTest.bla_at(10.seconds, 1, 2, 3)            
   end
 
   describe "consume" do

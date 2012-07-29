@@ -17,7 +17,7 @@ end
 # for Rails 2.3
 if Rails::VERSION::MAJOR == 2
 
-  class RqAddGenerator < Rails::Generator::NamedBase
+  class SkAddGenerator < Rails::Generator::NamedBase
     def manifest
       record do |m|
         m.template "consumer.rb", "app/models/bin/sk_#{file_path}.rb"

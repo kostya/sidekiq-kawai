@@ -19,7 +19,7 @@ Consumer
 app/models/sidekiq/sk_bla.rb
 
 ``` ruby
-class SkBla < SqQueue
+class SkBla < SkQueue
 
   def some_method1(a, b, c)
     logger.info "async called some_method1 with #{[a, b, c].inspect}"
@@ -38,7 +38,7 @@ Insert event into queue like this:
 
     or
 
-    RqBla.add_event(:some_method2, some_x)
+    SkBla.add_event(:some_method2, some_x)
 
 
 Logger for this consumer: Rails.root/log/sidekiq/bla.log
@@ -48,13 +48,13 @@ Logger for this consumer: Rails.root/log/sidekiq/bla.log
 ### Options
 
 ``` ruby
-class RqBla < RqQueue
+class SkBla < RkQueue
 
   # specify custom logger
-  self.logger_path = "#{Rails.root}/log/bla.log"
+  sidekiq_options :logger_path => "#{Rails.root}/log/bla.log"
 
   # enables benchmark for each event (into logger)
-  self.benchmark = true
+  sidekiq_options :benchmark => true
 
 end
 ```
@@ -64,20 +64,21 @@ end
 Usefull in specs
 
 ``` ruby
-  RqBla.proxy(:some_method1)
+  SkBla.proxy(:some_method1)
 ```
 
-When code call RqBla.some_method1(a,b,c) this would be convert into RqBla.new.some_method1(a,b,c)
+When code call SkBla.some_method1(a,b,c) this would be convert into SkBla.new.some_method1(a,b,c)
 
 
-### Insert event with Sidekiq-scheduler
+
+### Insert events with scheduler
 
 ``` ruby
-  RqBla.add_event_in(10.seconds, :some_method1, 1, 2, 3)
+SkBla.add_event_in(10.seconds, :some_method1, 1, 2, 3)
 
-  RqBla.enqueue_in(10.seconds, :some_method1, 1, 2, 3)
+SkBla.enqueue_in(10.seconds, :some_method1, 1, 2, 3)
 
-  RqBla.some_method_in(2.minutes.from_now,"call instance method on Worker sheduled async")
+SkBla.some_method2_in(2.minutes.from_now, "call instance method on Worker sheduled async")
 
-  RqBla.some_method_at(2.minutes.from_now,"call instance method on Worker sheduled async")
+SkBla.some_method2_at(2.minutes.from_now, "call instance method on Worker sheduled async")
 ```
