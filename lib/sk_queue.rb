@@ -89,7 +89,7 @@ class SkQueue
   # Worker.some_method_at(2.minutes.from_now,"call new method on Worker sheduled async")
   def self.method_missing(method_name, *args)    
     if method_name.to_s[/\A(\w*)_((at)|(in))\z/]
-      add_event_in(args.shift, $1, *args)
+      add_event_in(args.shift, $1.to_s.to_sym, *args)
     else
       add_event(method_name, *args)
     end

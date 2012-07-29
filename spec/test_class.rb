@@ -13,6 +13,10 @@ class SkTest < SkQueue
     $b = b
     10
   end
+  
+  def self.to_ary
+    super
+  end
 
 end
 

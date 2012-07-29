@@ -3,7 +3,7 @@ PATH
   specs:
     sidekiq-kawai (0.1.5)
       activesupport
-      sidekiq (= 2.1.0)
+      sidekiq (>= 2.1.0)
 
 GEM
   remote: http://rubygems.org/

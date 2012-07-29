@@ -1,7 +1,7 @@
 require File.dirname(__FILE__) + '/spec_helper'
 require File.dirname(__FILE__) + '/test_class'
 
-describe SkQueue do
+describe "main queue" do
 
   it "queue" do
     SkTest.queue_name.should == :test
@@ -77,12 +77,12 @@ describe SkQueue do
   
   it "abstract enqueue in" do
     SkTest.should_receive(:perform_in).with(10, :bla, [1, 2, 3])
-    SkTest.bla_in(10.seconds, 1, 2, 3)    
+    SkTest.bla_in(10, 1, 2, 3)    
   end
   
   it "abstract enqueue at" do
-    SkTest.should_receive(:perform_at).with(10, :bla, [1, 2, 3])
-    SkTest.bla_at(10.seconds, 1, 2, 3)            
+    SkTest.should_receive(:perform_in).with(10, :bla, [1, 2, 3])
+    SkTest.bla_at(10, 1, 2, 3)            
   end
 
   describe "consume" do
@@ -112,7 +112,7 @@ describe SkQueue do
 
     it "raised when method undefined" do
       lambda do
-        SkTest.perform('blasdfds', [1])
+        SkTest.new.perform('blasdfds', [1])
       end.should raise_error
     end
   end
