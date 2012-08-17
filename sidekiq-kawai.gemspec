@@ -10,7 +10,7 @@ Gem::Specification.new do |s|
   s.description = %q{Syntax sugar for Sidekiq workers. Each consumer is a class, with clean interface, and custom logger. Usefull when count of different events ~100 and more.}
   s.summary = %q{Syntax sugar for Sidekiq consumers. Each consumer is a class, with clean interface, and custom logger. Usefull when count of different events ~100 and more.}
   s.email = %q{dammer2k@gmail.com}
-  s.homepage = %q{https://github.com/dammer/sidekiq-kawai}
+  s.homepage = %q{https://github.com/kostya/sidekiq-kawai}
 
   s.files         = `git ls-files`.split("\n")
   s.test_files    = `git ls-files -- {test,spec,features}/*`.split("\n")
