@@ -10,10 +10,6 @@ gem 'sidekiq-kawai'
 
     rails generate sk:add bla
 
-And add to config/application.rb
-
-    config.autoload_paths += %W( #{config.root}/app/models/sidekiq )
-
 Consumer
 --------
 app/workers/sk_bla.rb
