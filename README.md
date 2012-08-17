@@ -16,7 +16,7 @@ And add to config/application.rb
 
 Consumer
 --------
-app/models/sidekiq/sk_bla.rb
+app/workers/sk_bla.rb
 
 ``` ruby
 class SkBla < SkQueue
@@ -41,7 +41,7 @@ Insert event into queue like this:
     SkBla.add_event(:some_method2, some_x)
 
 
-Logger for this consumer: Rails.root/log/sidekiq/bla.log
+Logger for this consumer: Rails.root/log/workers/bla.log
 
 
 
