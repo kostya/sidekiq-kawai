@@ -4,3 +4,4 @@ locks
 *.gem
 *.log
 .bundle
+Gemfile.lock
