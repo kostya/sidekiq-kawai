@@ -15,7 +15,7 @@ class SkQueue
   def self.inherited(subclass)
     subclass.class_eval do
       sidekiq_options :queue => extract_queue_name
-      sidekiq_options :logger_path => File.expand_path("log/sidekiq/#{queue_name}.log")
+      sidekiq_options :logger_path => File.expand_path("log/workers/#{queue_name}.log")
     end
   end
 
