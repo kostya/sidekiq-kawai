@@ -48,13 +48,16 @@ Logger for this consumer: Rails.root/log/sidekiq/bla.log
 ### Options
 
 ``` ruby
-class SkBla < RkQueue
+class SkBla < SkQueue
 
   # specify custom logger
   sidekiq_options :logger_path => "#{Rails.root}/log/bla.log"
 
   # enables benchmark for each event (into logger)
   sidekiq_options :benchmark => true
+
+  # don't notify logger about failed events
+  sidekiq_options :alerts => false
 
 end
 ```

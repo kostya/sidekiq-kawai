@@ -6,7 +6,7 @@ require 'sidekiq'
 class SkQueue
   include Sidekiq::Worker
 
-  sidekiq_options :retry => true, :benchmark => false
+  sidekiq_options :retry => true, :benchmark => false, :alerts => true
 
   def self.extract_queue_name
     name.gsub(/^Sk/, '').underscore.gsub('/', '-').to_sym rescue :default
@@ -21,14 +21,16 @@ class SkQueue
 
   def perform(method_name, args)
     start_time = benchmark ? Time.now : nil
-    
+
     self.send(method_name, *args)
-    
+
     logger.info "done #{method_name}, #{"%.6f" % (Time.now - start_time)} s" if benchmark
-    
+
   rescue => ex
-    logger.error "!Failed event: #{method_name} => #{ex.message}, #{args.inspect}"
-    self.class.notify_about_error(ex)    
+    if alerts
+      logger.error "!Failed event: #{method_name} => #{ex.message}, #{args.inspect}"
+      self.class.notify_about_error(ex)
+    end
     raise ex
   end
 
@@ -42,6 +44,18 @@ class SkQueue
 
   def benchmark
     self.class.benchmark
+  end
+
+  def self.alerts
+    get_sidekiq_options['alerts']
+  end
+
+  def self.alerts=(val)
+    sidekiq_options :alerts => val
+  end
+
+  def alerts
+    self.class.alerts
   end
 
   def self.queue_name
