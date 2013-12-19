@@ -119,10 +119,10 @@ class SkQueue
   end
 
   def self.proxy(method_name)
-    self.should_receive(method_name) do |*data|
+    self.stub(method_name) do |*data|
       x = Sidekiq.load_json(Sidekiq.dump_json(data))
       self.new.send(method_name, *x)
-    end.any_number_of_times
+    end
   end
   
   def self.notify_about_error(exception)
