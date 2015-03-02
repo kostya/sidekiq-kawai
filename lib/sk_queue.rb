@@ -129,4 +129,39 @@ class SkQueue
     # stub
   end
 
+
+  # ======== Batch processing ==========
+  @@prev_value = nil
+  @@queue = []
+  @@mutex = Mutex.new
+
+  def batched_by(elem, max_elems, &block)
+    new_value = block ? block.call : nil
+    if @@queue.length >= max_elems || (@@prev_value && @@prev_value != new_value)
+      return_value = nil
+      return_queue = nil
+      @@mutex.synchronize do
+        return_value = @@prev_value
+        return_queue = @@queue.dup
+        @@prev_value = new_value
+        @@queue = [elem]
+      end
+      [return_queue, return_value]
+    else
+      @@mutex.synchronize do 
+        @@queue << elem
+        @@prev_value = new_value
+      end
+      nil
+    end
+  end
+
+  def self.clear_batch
+    @@mutex.synchronize do 
+      @@queue = []
+      @@prev_value = nil
+    end
+  end
+  # =====================================
+
 end
