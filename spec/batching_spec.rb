@@ -3,6 +3,7 @@ require File.dirname(__FILE__) + '/spec_helper'
 describe "Batching" do
   before :each do
     SkTestBatch.clear_batch
+    SkTestBatch2.clear_batch
   end
 
   it "case 1" do
@@ -30,6 +31,14 @@ describe "Batching" do
     @test.bla(3, 3)
     @test.bla(4, 4)
     @test.batches.should == [[[1], 1], [[2], 2], [[3], 3]]
+  end
+
+  it "case 4" do
+    @test = SkTestBatch2.new
+    11.times do
+      @test.bla(1)
+    end
+    @test.batches.should == [[1,1,1,1,1], [1,1,1,1,1]]
   end
 
 end

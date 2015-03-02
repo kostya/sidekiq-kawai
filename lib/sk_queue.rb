@@ -146,7 +146,7 @@ class SkQueue
         @@prev_value = new_value
         @@queue = [elem]
       end
-      [return_queue, return_value]
+      block ? [return_queue, return_value] : return_queue
     else
       @@mutex.synchronize do
         @@queue << elem
