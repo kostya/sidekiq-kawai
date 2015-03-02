@@ -73,15 +73,15 @@ describe "main queue" do
     SkTest.should_receive(:perform_in).with(10, :super, [1, 2, 3])
     SkTest.add_event_in(10, :super, 1, 2, 3)
   end
-  
+
   it "abstract enqueue in" do
     SkTest.should_receive(:perform_in).with(10, :bla, [1, 2, 3])
-    SkTest.bla_in(10, 1, 2, 3)    
+    SkTest.bla_in(10, 1, 2, 3)
   end
-  
+
   it "abstract enqueue at" do
     SkTest.should_receive(:perform_in).with(10, :bla, [1, 2, 3])
-    SkTest.bla_at(10, 1, 2, 3)            
+    SkTest.bla_at(10, 1, 2, 3)
   end
 
   describe "consume" do
