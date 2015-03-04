@@ -119,7 +119,7 @@ class SkQueue
   end
 
   def self.proxy(method_name)
-    self.stub(method_name) do |*data|
+    allow(self).to receive(method_name) do |*data|
       x = Sidekiq.load_json(Sidekiq.dump_json(data))
       self.new.send(method_name, *x)
     end
